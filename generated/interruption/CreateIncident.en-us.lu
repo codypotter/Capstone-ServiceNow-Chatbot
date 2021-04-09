@@ -1,0 +1,98 @@
+
+> LUIS application information
+> !# @app.versionId = 0.1
+> !# @app.culture = en-us
+> !# @app.luis_schema_version = 3.2.0
+
+
+> # Intent definitions
+
+# ConfirmInput_Response_I72RS1
+- yes
+- no
+
+
+# ConfirmInput_Response_rZuUNw
+
+
+# ConfirmInput_Response_HKe6x8
+
+
+# ConfirmInput_Response_0UMmhp
+
+
+# ConfirmInput_Response_8hNOAB
+
+
+# ConfirmInput_Response_iKcTT7
+
+
+# TextInput_Response_63ABiT
+- {@comment}
+
+
+> # Entity definitions
+
+
+> # PREBUILT Entity definitions
+
+
+> # Phrase list definitions
+
+
+> # List entities
+
+@ list confirmation = 
+	- yes :
+		- yeah
+		- ok
+		- yup
+		- yeah
+		- ok
+		- yup
+		- yeah
+		- ok
+		- yup
+		- yeah
+		- ok
+		- yup
+		- yeah
+		- ok
+		- yup
+		- yeah
+		- ok
+		- yup
+	- no :
+		- nope
+		- not now
+		- not really
+		- go back
+
+
+> # RegEx entities
+
+
+> # Pattern.Any entities
+
+@ patternany comment
+
+
+> Source: cross training. Please do not edit these directly!
+# _Interruption
+- Hi
+- Hello
+- Hi there
+- Howdy
+- Good day
+- profile
+- my profile
+- user information
+- my information
+- create profile
+- build profile
+- get tickets
+- tickets
+- search
+- searching
+- searching for a
+- find

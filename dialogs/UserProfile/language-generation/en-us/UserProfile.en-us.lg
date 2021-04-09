@@ -1,0 +1,34 @@
+[import](common.lg)
+
+# SendActivity_Lq4cyr()
+- OK! Let me check what I know about you already and we'll go from there.
+# TextInput_Prompt_e0XxEJ()
+- What is your first (given) name?
+# TextInput_InvalidPrompt_e0XxEJ()
+- ${TryAgain()}
+# TextInput_DefaultValueResponse_e0XxEJ()
+- ${FailedCapture()}
+# SendActivity_ym3ZoC()
+- First Name: ${user.firstName}
+# SendActivity_EtxZhj()
+- Thanks ${user.firstName}!
+# SendActivity_bWIVf3()
+- Last Name: ${user.lastName}
+# SendActivity_znZQhG()
+- Thanks!
+# TextInput_Prompt_77RW9A()
+- What is your last name (surname)?
+# TextInput_InvalidPrompt_77RW9A()
+- ${TryAgain()}
+# TextInput_DefaultValueResponse_77RW9A()
+- ${FailedCapture()}
+# SendActivity_CyTqC3()
+- Department: ${user.dept}
+# TextInput_Prompt_qeiVyx()
+-  What department to you work in?
+# TextInput_InvalidPrompt_qeiVyx()
+- ${TryAgain()}
+# TextInput_DefaultValueResponse_qeiVyx()
+- ${FailedCapture()}
+# SendActivity_bC5iIk()
+- Thanks!

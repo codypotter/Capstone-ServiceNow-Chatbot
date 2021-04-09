@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.LuisRecognizer",
+  "id": "LUIS_mc-servicenowbot",
+  "applicationId": "=settings.luis.mc_servicenowbot_en_us_lu.appId",
+  "version": "=settings.luis.mc_servicenowbot_en_us_lu.version",
+  "endpoint": "=settings.luis.endpoint",
+  "endpointKey": "=settings.luis.endpointKey"
+}

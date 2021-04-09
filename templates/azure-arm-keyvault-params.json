@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "keyVaultName": {
+      "value": "mc-mcso-capstone-kv"
+    },
+    "sqlsrvadminobjectid": {
+      "value": "NULL"
+    },
+    "enabledForDeployment": {
+      "value": true
+    },
+    "enabledForDiskEncryption": {
+      "value": true
+    },
+    "enabledForTemplateDeployment": {
+      "value": true
+    },
+    "enablePurgeProtection":{
+      "value": true
+    },
+    "enableSoftDelete": {
+        "value": true
+    },
+    "skuName": {
+      "value": "Standard"
+    },
+    "VaultTags": {
+      "value": {
+        "ApplicationName": "ServiceNowChatbot",
+        "ApplicationTeam": "Capstone",
+        "Compliance": "NA",
+        "Environment": "Dev",
+        "Service": "Communication",
+        "Customer": "MCSO"
+      }
+    }
+ }
+}

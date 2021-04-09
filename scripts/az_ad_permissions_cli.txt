@@ -1,0 +1,4 @@
+exit
+$grpid = (az ad group show --group "{groupName}" --query "objectId" --output tsv)
+
+az role assignment create --assignee "$grpid" --role "Reader" --subscription "00000000-0000-0000-0000-000000000000"

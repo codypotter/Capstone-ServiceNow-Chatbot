@@ -1,0 +1,17 @@
+[import](common.lg)
+
+# ConfirmInput_Prompt_1ephAY()
+- There was a problem adding your comment, would you like to try again?
+# SendActivity_CoBdFu()
+- Successfully added your comment!
+# SendActivity_XDE9ZB()
+[Activity
+    Type = typing
+]
+# SendActivity_UjO2Qo()
+[Activity
+    type = delay
+    value = 3000
+]
+# SendActivity_07xseR()
+- There was a problem adding your comment, please try again.

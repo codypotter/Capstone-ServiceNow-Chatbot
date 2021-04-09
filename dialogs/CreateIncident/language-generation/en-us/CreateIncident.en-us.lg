@@ -1,0 +1,71 @@
+[import](common.lg)
+
+# CreateIncidentForm()
+[Activity
+    Attachments = ${json(CreateIncident())}
+]
+# Ask_Activity_vxwGWK()
+- ${CreateIncidentForm()}
+# ConfirmInput_Prompt_I72RS1()
+- There was a problem checking existing incidents, would you like to try again?
+# TextInput_Prompt_6lOpYM()
+- ${CreateIncidentForm()}
+# TextInput_InvalidPrompt_6lOpYM()
+- ${CreateIncidentForm()}
+# ConfirmInput_Prompt_rZuUNw()
+- IF: ${ length(user.CreateIncidentTemp.comments) > 1 }
+    -```Found an existing unsubmitted ${dialog.ticketType}, would you like to reuse it?
+    Description: ${user.CreateIncidentTemp.description}
+    Category: ${user.CreateIncidentTemp.category}
+    Comment: ${user.CreateIncidentTemp.comments}
+    ```
+- ELSE:
+    -```Found an existing unsubmitted ${dialog.ticketType}, would you like to reuse it?
+    Description: ${user.CreateIncidentTemp.description}
+    Category: ${user.CreateIncidentTemp.category}
+    ```
+# TextInput_InvalidPrompt_WrErZD()
+- IF: ${ dialog.ticketType == "incident" }
+    - ${CreateIncidentForm()}
+- ELSE:
+    - ${CreateWorkTaskForm()}
+# ConfirmInput_Prompt_HKe6x8()
+- IF: ${ dialog.similarIncidentCount > 1 }
+    - I found some existing ${dialog.ticketType}s that are similar to yours, would you like to take a look at them?
+- ELSE:
+    - I found an existing ${dialog.ticketType} that is similar to yours, would you like to take a look at it?
+# ConfirmInput_Prompt_0UMmhp()
+-```Is this the ${dialog.ticketType} what you were looking for?
+    Description: ${dialog.curIncidentLoop.value.short_description}
+    ${dialog.tempComments}
+    ```
+# ConfirmInput_Prompt_8hNOAB()
+- Would you like to add a comment to this ${dialog.ticketType}?
+# TextInput_Prompt_WrErZD()
+- IF: ${ dialog.ticketType == "incident" }
+    - ${CreateIncidentForm()}
+- ELSE:
+    - ${CreateWorkTaskForm()}
+# CreateWorkTaskForm()
+[Activity
+    Attachments = ${json(CreateTask())}
+]
+# ConfirmInput_Prompt_iKcTT7()
+- ``` Would you like to use your previously entered comment?
+Comment: ${user.createIncidentTemp.comments}
+```
+# TextInput_Prompt_63ABiT()
+- Please enter a comment which you wish to add to this ${dialog.ticketType}
+# TextInput_InvalidPrompt_63ABiT()
+- ${TryAgain()}
+# SendActivity_oiaeUT()
+- I couldn't get a valid category or description, please try again.
+# SendActivity_PwxXWS()
+[Activity
+    type = delay
+    value = 3000
+]
+# SendActivity_bpLKle()
+[Activity
+    Type = typing
+]

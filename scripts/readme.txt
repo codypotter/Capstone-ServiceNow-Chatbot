@@ -1,0 +1,1 @@
+scripts - Various scripts( Azure CLI, PowerShell, etc)

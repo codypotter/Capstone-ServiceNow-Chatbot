@@ -1,0 +1,113 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "9rWMSG",
+    "name": "GetAllTickets",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "cbp4os"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "0shKGP"
+          },
+          "activity": "${SendActivity_0shKGP()}"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "uPvYvV"
+          },
+          "activity": "${SendActivity_uPvYvV()}"
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "oBkeVZ"
+          },
+          "method": "GET",
+          "url": "https://multuat.service-now.com/api/now/table/task?sysparm_query=sys_created_by=mdash-api&sysparm_display_value=true&sysparm_fields=number,u_requested_for,u_customer,short_description,comments,assignment_groupt,state,sys_id",
+          "resultProperty": "dialog.api_response",
+          "headers": {
+            "Authorization": "Basic ${conversation.serviceNowHash}"
+          }
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "caz99r"
+          },
+          "condition": "dialog.api_response.statusCode",
+          "cases": [
+            {
+              "value": "200",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "mOmXU3"
+                  },
+                  "value": "=dialog.api_response.content"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.ConfirmInput",
+              "$designer": {
+                "id": "vSxmAq"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": true,
+              "allowInterruptions": false,
+              "prompt": "${ConfirmInput_Prompt_vSxmAq()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
+              },
+              "property": "dialog.confirmed",
+              "value": "=@confirmation"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "kic6nW"
+              },
+              "condition": "dialog.confirmed == true || dialog.confirmed == \"yes\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "xf1oLy"
+                  },
+                  "activityProcessed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetAllTickets.lg",
+  "recognizer": "GetAllTickets.lu.qna",
+  "id": "GetAllTickets"
+}

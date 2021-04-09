@@ -1,0 +1,15 @@
+[import](common.lg)
+
+# SendActivity_r0KssB()
+- Successfully created your ${dialog.ticketType}!
+# ConfirmInput_Prompt_dONsf9()
+- There was a problem creating your ${dialog.ticketType}, would you like to try again?
+# SendActivity_4saFMB()
+[Activity
+    Type = typing
+]
+# SendActivity_cP4sn6()
+[Activity
+    type = delay
+    value = 3000
+]

@@ -1,0 +1,102 @@
+
+
+
+
+
+
+
+# ConfirmInput_Response_I72RS1
+- yes
+- no
+
+@ list confirmation = 
+	- yes :
+		-   yeah
+		-   ok
+		-   yup
+	- no :
+		-   nope
+		-   not now
+		-   not really
+		-   go back
+
+
+
+# ConfirmInput_Response_rZuUNw
+- yes
+- no
+
+@ list confirmation = 
+	- yes :
+		-   yeah
+		-   ok
+		-   yup
+	- no :
+		-   nope
+		-   not now
+		-   not really
+		-   go back
+
+# ConfirmInput_Response_HKe6x8
+- yes
+- no
+
+@ list confirmation = 
+	- yes :
+		-   yeah
+		-   ok
+		-   yup
+	- no :
+		-   nope
+		-   not now
+		-   not really
+		-   go back
+
+# ConfirmInput_Response_0UMmhp
+- yes
+- no
+
+@ list confirmation = 
+	- yes :
+		-   yeah
+		-   ok
+		-   yup
+	- no :
+		-   nope
+		-   not now
+		-   not really
+		-   go back
+
+# ConfirmInput_Response_8hNOAB
+- yes
+- no
+
+@ list confirmation = 
+	- yes :
+		-   yeah
+		-   ok
+		-   yup
+	- no :
+		-   nope
+		-   not now
+		-   not really
+		-   go back
+
+# ConfirmInput_Response_iKcTT7
+- yes
+- no
+
+@ list confirmation = 
+	- yes :
+		-   yeah
+		-   ok
+		-   yup
+	- no :
+		-   nope
+		-   not now
+		-   not really
+		-   go back
+
+
+# TextInput_Response_63ABiT
+- {comment}

@@ -1,0 +1,15 @@
+
+# ConfirmInput_Response_vSxmAq
+- yes
+- no
+
+@ list confirmation = 
+    - yes : 
+		    - yeah
+		    - ok
+		    - yup
+    - no :
+        - nope
+        - not now
+        - not really
+        - go back  

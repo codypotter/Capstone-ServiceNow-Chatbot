@@ -1,0 +1,690 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "7hrSsh",
+    "name": "Search",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "IoqMHc"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "0mH2qI"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_0mH2qI()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "style": "heroCard",
+          "choices": [
+            "Incident",
+            "Ticket"
+          ],
+          "property": "dialog.ticket_type"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "uju3Ul"
+          },
+          "condition": "=dialog.ticket_type == \"Incident\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "KrBGQM"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${TextInput_Prompt_KrBGQM()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "dialog.form_response",
+              "outputFormat": "=\"temp\""
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "Ya7hM0"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${TextInput_Prompt_Ya7hM0()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "dialog.form_response",
+              "outputFormat": "=\"temp\""
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "IsVLdu"
+          },
+          "assignments": [
+            {
+              "property": "dialog.date",
+              "value": "=turn.activity.value.date"
+            },
+            {
+              "value": "=turn.activity.value.state",
+              "property": "dialog.state"
+            },
+            {
+              "value": "=turn.activity.value.category",
+              "property": "dialog.category"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "FnPEz8"
+          },
+          "condition": "=length(dialog.date) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "IN1L1T"
+              },
+              "activity": "${SendActivity_IN1L1T()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "VFWhrZ"
+              },
+              "property": "dialog.url",
+              "value": "https://multuat.service-now.com/api/now/table/task?sysparm_query=sys_created_onON${dialog.date}%40javascript%3Ags.dateGenerate('${dialog.date}'%2C'start')%40javascript%3Ags.dateGenerate('${dialog.date}'%2C'end')%5Esys_created_by%3Dmdash-api&sysparm_display_value=true&sysparm_fields=number%2Cu_requested_for%2Ccategory%2Cu_customer%2Cshort_description%2Ccomments%2Cassignment_group%2Cstate"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "zMdrqN"
+              },
+              "activity": "${SendActivity_zMdrqN()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "w68z6K"
+              },
+              "activity": "${SendActivity_w68z6K()}"
+            },
+            {
+              "$kind": "Microsoft.HttpRequest",
+              "$designer": {
+                "id": "3PUnCY"
+              },
+              "method": "GET",
+              "url": "${dialog.url}",
+              "resultProperty": "dialog.api_response",
+              "headers": {
+                "Authorization": "Basic ${conversation.serviceNowHash}"
+              }
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "wtE8Ax"
+              },
+              "condition": "=empty(dialog.api_response.content.result)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "5gic00"
+                  },
+                  "activity": "${SendActivity_5gic00()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "PImDQe"
+                  },
+                  "index": "dialog.curTicketsLoop.index",
+                  "value": "dialog.curTicketsLoop.value",
+                  "itemsProperty": "dialog.api_response.content.result",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "0AkKIf"
+                      },
+                      "condition": "length(dialog.curTicketsLoop.value.comments) > 0",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "PAw0lB"
+                          },
+                          "property": "dialog.tempComment",
+                          "value": "=\"Comments: \\n\" + dialog.curTicketsLoop.value.comments"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "qi28Kg"
+                      },
+                      "activity": "${SendActivity_qi28Kg()}"
+                    },
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "wtIdKz"
+                      },
+                      "property": "dialog.tempComment"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "elseActions": []
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "N2ayWV"
+          },
+          "condition": "=length(dialog.state) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Vc0GzV"
+              },
+              "activity": "${SendActivity_Vc0GzV()}"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "kX51Ms"
+              },
+              "condition": "=dialog.ticket_type == \"Incident\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "O2DM6O"
+                  },
+                  "property": "dialog.url",
+                  "value": "https://multuat.service-now.com/api/now/table/incident?sysparm_query=state%3D${dialog.state}%5Esys_created_by%3Dmdash-api&sysparm_display_value=true&sysparm_fields=number%2Cu_customer%2Cu_category%2Cshort_description%2Ccomments%2Cassignment_group%2Cstate"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "r1nTsk"
+                  },
+                  "property": "dialog.url",
+                  "value": "https://multuat.service-now.com/api/now/table/ticket?sysparm_query=state%3D${dialog.state}%5Esys_created_by%3Dmdash-api&sysparm_display_value=true&sysparm_fields=number%2Cu_customer%2Cu_category%2Cshort_description%2Ccomments%2Cassignment_group%2Cstate"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "BCHFWZ"
+              },
+              "activity": "${SendActivity_BCHFWZ()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "xH04Bx"
+              },
+              "activity": "${SendActivity_xH04Bx()}"
+            },
+            {
+              "$kind": "Microsoft.HttpRequest",
+              "$designer": {
+                "id": "sP1YUc"
+              },
+              "method": "GET",
+              "url": "${dialog.url}",
+              "resultProperty": "dialog.api_response",
+              "headers": {
+                "Authorization": "Basic ${conversation.serviceNowHash}"
+              }
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "Q4rcsh"
+              },
+              "condition": "=empty(dialog.api_response.content.result)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "1OmEDn"
+                  },
+                  "activity": "${SendActivity_1OmEDn()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "88BH7F"
+                  },
+                  "index": "dialog.curTicketsLoop.index",
+                  "value": "dialog.curTicketsLoop.value",
+                  "itemsProperty": "dialog.api_response.content.result",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "fQGVfs"
+                      },
+                      "condition": "length(dialog.curTicketsLoop.value.comments) > 0",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "ZDqsea"
+                          },
+                          "property": "dialog.tempComment",
+                          "value": "=\"Comments: \\n\" + dialog.curTicketsLoop.value.comments"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "6fFFn4"
+                      },
+                      "activity": "${SendActivity_6fFFn4()}"
+                    },
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "p6HaSd"
+                      },
+                      "property": "dialog.tempComment"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "elseActions": []
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "H7oK8z"
+          },
+          "condition": "=length(dialog.category) > 0",
+          "elseActions": [],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "hmwh8p"
+              },
+              "activity": "${SendActivity_hmwh8p()}"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "xayddU"
+              },
+              "condition": "=dialog.ticket_type == \"Incident\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "D31MQv"
+                  },
+                  "property": "dialog.url",
+                  "value": "https://multuat.service-now.com/api/now/table/incident?sysparm_query=sys_created_by%3Dmdash-api%5Ecategory%3D${dialog.category}&sysparm_display_value=true&sysparm_fields=number%2Cu_customer%2Cu_category%2Cshort_description%2Ccomments%2Cassignment_group%2Cstate"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ugKgYg"
+                  },
+                  "activity": "${SendActivity_ugKgYg()}"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "OXkE8f"
+                  },
+                  "activity": "${SendActivity_OXkE8f()}"
+                },
+                {
+                  "$kind": "Microsoft.HttpRequest",
+                  "$designer": {
+                    "id": "hg5ANi"
+                  },
+                  "method": "GET",
+                  "url": "${dialog.url}",
+                  "resultProperty": "dialog.api_response",
+                  "headers": {
+                    "Authorization": "Basic ${conversation.serviceNowHash}"
+                  }
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "Ttajqt"
+                  },
+                  "property": "dialog.url",
+                  "value": "https://multuat.service-now.com/api/now/table/ticket?sysparm_query=u_category%3D${dialog.category}%5Esys_created_by%3Dmdash-api&sysparm_display_value=true&sysparm_fields=number%2Cu_requested_for%2Cu_category%2Cshort_description%2Ccomments%2Cassignment_group%2Cstate%2Csys_id"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "XdLTCR"
+                  },
+                  "activity": "${SendActivity_XdLTCR()}"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "3oqY9M"
+                  },
+                  "activity": "${SendActivity_3oqY9M()}"
+                },
+                {
+                  "$kind": "Microsoft.HttpRequest",
+                  "$designer": {
+                    "id": "eI9d1w"
+                  },
+                  "method": "GET",
+                  "url": "${dialog.url}",
+                  "resultProperty": "dialog.api_response",
+                  "headers": {
+                    "Authorization": "Basic ${conversation.serviceNowHash}"
+                  }
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "6JzSO0"
+              },
+              "condition": "=empty(dialog.api_response.content.result)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "uUlb6S"
+                  },
+                  "activity": "${SendActivity_uUlb6S()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "biCX9P"
+                  },
+                  "index": "dialog.curTicketsLoop.index",
+                  "value": "dialog.curTicketsLoop.value",
+                  "itemsProperty": "dialog.api_response.content.result",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "9BSjDI"
+                      },
+                      "condition": "length(dialog.curTicketsLoop.value.comments) > 0",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "WNMJ2h"
+                          },
+                          "property": "dialog.tempComment",
+                          "value": "=\"Comments: \\n\" + dialog.curTicketsLoop.value.comments"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "OTPIA8"
+                      },
+                      "condition": "=dialog.ticket_type == \"Incident\"",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "7Zyl8t"
+                          },
+                          "property": "dialog.tempCustomerName",
+                          "value": "=dialog.curTicketsLoop.value.u_customer.display_value"
+                        }
+                      ],
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "ncVgJT"
+                          },
+                          "property": "dialog.tempCustomerName",
+                          "value": "=dialog.curTicketsLoop.value.u_requested_for.display_value"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "11fZxf"
+                      },
+                      "activity": "${SendActivity_11fZxf()}"
+                    },
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "mceOUl"
+                      },
+                      "property": "dialog.tempComment"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "AEICOz"
+          },
+          "condition": "=length(dialog.date) == 0 && length(dialog.state) == 0 && length(dialog.category) == 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.ChoiceInput",
+              "$designer": {
+                "id": "XudLJp"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${ChoiceInput_Prompt_XudLJp()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true
+              },
+              "property": "dialog.response",
+              "choices": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "FYfVfs"
+              },
+              "condition": "=dialog.response == \"Yes\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "ukjmTI"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetAllTickets",
+                  "resultProperty": "dialog.tickets"
+                },
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "FUMlqj"
+                  },
+                  "index": "dialog.curTicketsLoop.index",
+                  "value": "dialog.curTicketsLoop.value",
+                  "itemsProperty": "dialog.tickets.result",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "sTccDL"
+                      },
+                      "condition": "length(dialog.curTicketsLoop.value.comments) > 0",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "y5uhAE"
+                          },
+                          "property": "dialog.tempComment",
+                          "value": "=\"Comments: \\n\" + dialog.curTicketsLoop.value.comments"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "nkB7K0"
+                      },
+                      "activity": "${SendActivity_nkB7K0()}"
+                    },
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "xuv9QP"
+                      },
+                      "property": "dialog.tempComment"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "HV7bqv"
+                  }
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "mbW1E5"
+                  }
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.ChoiceInput",
+              "$designer": {
+                "id": "hEDuLY"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${ChoiceInput_Prompt_hEDuLY()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or "
+              },
+              "style": "heroCard",
+              "choices": [
+                "Yes",
+                "No"
+              ],
+              "property": "dialog.response"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "phXBBG"
+              },
+              "condition": "=dialog.response == \"Yes\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "aHDccT"
+                  },
+                  "activityProcessed": true
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "koqj7V"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "Search.lg",
+  "recognizer": "Search.lu.qna",
+  "id": "Search"
+}

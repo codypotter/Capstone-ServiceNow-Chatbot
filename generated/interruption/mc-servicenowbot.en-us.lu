@@ -1,0 +1,97 @@
+
+> LUIS application information
+> !# @app.versionId = 0.1
+> !# @app.culture = en-us
+> !# @app.luis_schema_version = 3.2.0
+
+
+> # Intent definitions
+
+# Help
+- help
+- What can you help with?
+- What can you do?
+- What are your capabilities?
+- I need assistance
+- I need help
+
+
+# Greeting
+- Hi
+- Hello
+- Hi there
+- Howdy
+- Good day
+
+
+# UserProfile
+- profile
+- my profile
+- user information
+- my information
+- create profile
+- build profile
+
+
+# Cancel
+- cancel
+- nevermind
+- nvm
+- stop
+
+
+# Tickets
+- get tickets
+- tickets
+
+
+# Incident
+- create incident
+- new incident
+- incident
+
+
+# WorkTask
+- create work task
+- new work task
+- work task
+
+
+# Search
+- search
+- searching
+- searching for a
+- find
+
+
+# ConfirmInput_Response_qE5g8N
+- yes
+- no
+
+
+> # Entity definitions
+
+
+> # PREBUILT Entity definitions
+
+
+> # Phrase list definitions
+
+
+> # List entities
+
+@ list confirmation = 
+	- yes :
+		- yeah
+		- ok
+		- yup
+	- no :
+		- nope
+		- not now
+		- not really
+		- go back
+
+
+> # RegEx entities
+
+

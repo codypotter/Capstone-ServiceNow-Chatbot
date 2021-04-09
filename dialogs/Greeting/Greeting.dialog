@@ -1,0 +1,32 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "adqtIc",
+    "name": "Greeting",
+    "description": "respond to user greeting"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "CDEaVf"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "TnBmYg"
+          },
+          "activity": "${SendActivity_TnBmYg()}"
+        }
+      ]
+    }
+  ],
+  "generator": "Greeting.lg",
+  "recognizer": "Greeting.lu.qna",
+  "id": "Greeting"
+}

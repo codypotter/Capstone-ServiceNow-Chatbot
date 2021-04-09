@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "LUIS_GetAllTickets",
+  "recognizers": {
+    "en-us": "GetAllTickets.en-us.lu",
+    "": "GetAllTickets.en-us.lu"
+  }
+}

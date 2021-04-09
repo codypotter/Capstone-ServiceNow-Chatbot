@@ -1,0 +1,226 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "P7yCBm",
+    "name": "UserProfile",
+    "description": "Gather user information and store it in user.firstName, user.lastName, etc."
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "r1EoMs"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "Lq4cyr"
+          },
+          "activity": "${SendActivity_Lq4cyr()}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "qYe5AW"
+          },
+          "condition": "user.firstName == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "e0XxEJ"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "prompt": "${TextInput_Prompt_e0XxEJ()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "${TextInput_InvalidPrompt_e0XxEJ()}",
+              "defaultValueResponse": "${TextInput_DefaultValueResponse_e0XxEJ()}",
+              "property": "user.firstName",
+              "value": "=@firstName",
+              "validations": [
+                "string(this.value) != null",
+                "length(this.value) > 1"
+              ],
+              "outputFormat": "=toUpper(this.value)",
+              "defaultValue": "unknown",
+              "allowInterruptions": true
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "LXQ4f8"
+              },
+              "condition": "user.firstName == \"unknown\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.DeleteProperty",
+                  "$designer": {
+                    "id": "DLUWLV"
+                  },
+                  "property": "user.firstName"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "EtxZhj"
+                  },
+                  "activity": "${SendActivity_EtxZhj()}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ym3ZoC"
+              },
+              "activity": "${SendActivity_ym3ZoC()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "GERL0T"
+          },
+          "condition": "user.lastName == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "77RW9A"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": true,
+              "prompt": "${TextInput_Prompt_77RW9A()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "${TextInput_InvalidPrompt_77RW9A()}",
+              "defaultValueResponse": "${TextInput_DefaultValueResponse_77RW9A()}",
+              "property": "user.lastName",
+              "value": "=@lastName",
+              "outputFormat": "=toUpper(this.value)",
+              "validations": [
+                "length(this.value) > 1",
+                "string(this.value) != null"
+              ],
+              "defaultValue": "unkown"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "9vHKx0"
+              },
+              "condition": "user.lastName == \"unknown\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.DeleteProperty",
+                  "$designer": {
+                    "id": "V7xZQm"
+                  },
+                  "property": "user.lastName"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "znZQhG"
+                  },
+                  "activity": "${SendActivity_znZQhG()}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "bWIVf3"
+              },
+              "activity": "${SendActivity_bWIVf3()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "x9q5TV"
+          },
+          "condition": "user.dept == null",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "CyTqC3"
+              },
+              "activity": "${SendActivity_CyTqC3()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "qeiVyx"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": true,
+              "prompt": "${TextInput_Prompt_qeiVyx()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "${TextInput_InvalidPrompt_qeiVyx()}",
+              "defaultValueResponse": "${TextInput_DefaultValueResponse_qeiVyx()}",
+              "property": "user.dept",
+              "outputFormat": "=toUpper(this.value)",
+              "validations": [
+                "length(this.value) > 1",
+                "string(this.value) != null"
+              ],
+              "defaultValue": "unkown"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "5NLjyy"
+              },
+              "condition": "user.dept == \"unknown\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.DeleteProperty",
+                  "$designer": {
+                    "id": "V3iid3"
+                  },
+                  "property": "user.dept"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "bC5iIk"
+                  },
+                  "activity": "${SendActivity_bC5iIk()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "UserProfile.lg",
+  "recognizer": "UserProfile.lu.qna",
+  "id": "UserProfile"
+}

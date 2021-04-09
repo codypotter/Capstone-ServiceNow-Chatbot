@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "rgName": {
+      "value": "mc-mcso-servicenowchatbot-dev-rg"
+    },
+    "rgLocation": {
+      "value": "westus"
+    },
+       "tags": {
+            "value": {
+                "ApplicationName": "ServiceNowChatbot",
+                "ApplicationTeam": "Capstone",
+                "Compliance": "NA",
+                "Environment": "Dev",
+                "Service": "Communication",
+                "Customer": "MCSO"
+            }
+        }
+  }
+}

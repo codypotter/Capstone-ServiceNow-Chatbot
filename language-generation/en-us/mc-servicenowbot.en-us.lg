@@ -1,0 +1,30 @@
+[import](common.lg)
+
+# SendActivity_Welcome()
+[Activity
+    text = ${WelcomeUser()}
+    SuggestedActions = Profile | Help
+]
+
+# SendActivity_olBHIX()
+- Sorry, I didn't understand that. I'm still learning. Try phrasing it differently and I'll do my best to help you.
+# SendActivity_O5hmtJ()
+[Activity
+    text = ${Help()}
+    SuggestedActions = Profile | Weather
+]
+# SendActivity_9ww267()
+- No problem, cancelling now!
+# SendActivity_3F6fJa()
+-```
+    Number: ${dialog.curTicketsLoop.value.number}
+    Short Description: ${dialog.curTicketsLoop.value.short_description}
+    ${dialog.tempComment}State: ${dialog.curTicketsLoop.value.state}
+    Customer Name: ${dialog.curTicketsLoop.value.u_customer.display_value}
+```
+# SendActivity_jfGVd9()
+- ${turn.activity.value} ${turn.activity.text} ${turn.activity.type} true
+# SendActivity_oG1EIa()
+- ${turn.activity.value} ${turn.activity.text} ${turn.activity.type} false
+# ConfirmInput_Prompt_qE5g8N()
+- Would you like to view another ticket?

@@ -1,0 +1,182 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "JR3oHa",
+    "name": "AddComment",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "wTLZu7"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "lSKF7c"
+          },
+          "condition": "user.createIncidentTemp.toUpdateSysID == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "07xseR"
+              },
+              "activity": "${SendActivity_07xseR()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "EkAX3e"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "VaG5Hh"
+          },
+          "condition": "dialog.ticketType == \"incident\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "vNWD7A"
+              },
+              "property": "dialog.putCommentURL",
+              "value": "https://multuat.service-now.com/api/now/table/incident/${user.createIncidentTemp.toUpdateSysID}?sysparm_display_value=true&sysparm_fields=number%2Ccaller_id%2Ccategory%2Cstate%2Cshort_description%2Cassignment_group%2Cassigned_to%2Ccomments"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "eTXo24"
+              },
+              "property": "dialog.putCommentURL",
+              "value": "https://multuat.service-now.com/api/now/table/ticket/${user.createIncidentTemp.toUpdateSysID}?sysparm_display_value=true&sysparm_fields=number%2Cu_requested_for%2Cu_category%2Cstate%2Cshort_description%2Cassignment_group%2Cassigned_to%2Ccomments"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "XDE9ZB"
+          },
+          "activity": "${SendActivity_XDE9ZB()}"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "UjO2Qo"
+          },
+          "activity": "${SendActivity_UjO2Qo()}"
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "TF1zCE"
+          },
+          "method": "PUT",
+          "headers": {
+            "Authorization": "Basic ${conversation.serviceNowHash}"
+          },
+          "body": "{\"comments\":\"${user.createIncidentTemp.comments}\"}",
+          "url": "${dialog.putCommentURL}",
+          "resultProperty": "dialog.putComments_response"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "NHZotI"
+          },
+          "cases": [
+            {
+              "value": "200",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "CoBdFu"
+                  },
+                  "activity": "${SendActivity_CoBdFu()}"
+                },
+                {
+                  "$kind": "Microsoft.DeleteProperties",
+                  "$designer": {
+                    "id": "IOGu8x"
+                  },
+                  "properties": [
+                    "user.CreateIncidentTemp.category",
+                    "user.CreateIncidentTemp.description",
+                    "user.CreateIncidentTemp.comments",
+                    "user.CreateIncidentTemp.toUpdateSysID"
+                  ]
+                }
+              ]
+            }
+          ],
+          "condition": "dialog.putComments_response.statusCode",
+          "default": [
+            {
+              "$kind": "Microsoft.ConfirmInput",
+              "$designer": {
+                "id": "1ephAY"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": true,
+              "allowInterruptions": false,
+              "prompt": "${ConfirmInput_Prompt_1ephAY()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
+              },
+              "property": "dialog.retryCommentsPut",
+              "value": "=@confirmation"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "cur7LJ"
+              },
+              "condition": "dialog.retryCommentsPut == true || dialog.retryCommentsPut == \"yes\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "5liwv1"
+                  },
+                  "activityProcessed": true,
+                  "options": "={ticketType:dialog.ticketType}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "wacPiw"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "AddComment.lg",
+  "recognizer": "AddComment.lu.qna",
+  "id": "AddComment"
+}

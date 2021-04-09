@@ -1,0 +1,71 @@
+
+> LUIS application information
+> !# @app.versionId = 0.1
+> !# @app.culture = en-us
+> !# @app.luis_schema_version = 3.2.0
+
+
+> # Intent definitions
+
+# TextInput_Response_e0XxEJ
+- my name is {@firstName}
+- {@firstName}
+- {@firstName} is my name
+- you can call me {@firstName}
+- i go by {@firstName}
+- my given name is {@firstName}
+
+
+# TextInput_Response_77RW9A
+- my last name is {@lastName}
+- my surname is {@lastName}
+- {@lastName}
+
+
+# TextInput_Response_qeiVyx
+- I work in the ${@dept} department
+- ${@dept}
+- the ${@dept} department
+- I am in the ${@dept} department
+
+
+> # Entity definitions
+
+
+> # PREBUILT Entity definitions
+
+
+> # Phrase list definitions
+
+
+> # List entities
+
+> # RegEx entities
+
+
+> # Pattern.Any entities
+
+@ patternany firstName
+@ patternany lastName
+@ patternany dept
+
+
+> Source: cross training. Please do not edit these directly!
+# _Interruption
+- Hi
+- Hello
+- Hi there
+- Howdy
+- Good day
+- get tickets
+- tickets
+- create incident
+- new incident
+- incident
+- create work task
+- new work task
+- work task
+- search
+- searching
+- searching for a
+- find

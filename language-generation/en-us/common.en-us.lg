@@ -1,0 +1,809 @@
+# WelcomeUser()
+- Welcome to the ServiceNow chatbot demo! What can I do for you today?
+# Greeting()
+- Hi!
+- Hello!
+- Hi there!
+- Howdy!
+# FailedCapture()
+- I must be having trouble understanding. Let's move on for now.
+# TryAgain()
+-Sorry, I didn't catch that. Please try again.
+# Help()
+-Hello! I'm still in the process of learning new things to  help you. Right now, I can help you create a profile or check the current weather conditions for you. Just type PROFILE or WEATHER or select from the options below with your mouse.
+# CreateIncident()
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Incident Report",
+            "wrap": true,
+            "fontType": "Monospace",
+            "size": "ExtraLarge",
+            "weight": "Bolder"
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Incident:",
+                                    "wrap": true,
+                                    "size": "Medium",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "*required",
+                                    "wrap": true,
+                                    "color": "Attention"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Input.Text",
+                    "placeholder": "Provide a short description of the incident...",
+                    "id": "description"
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Incident Category:",
+                                    "wrap": true,
+                                    "size": "Medium",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "*required",
+                                    "wrap": true,
+                                    "color": "Attention"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Input.ChoiceSet",
+                    "choices": [
+                        {
+                            "title": "DCA Applications",
+                            "value": "DCA Applications"
+                        },
+                        {
+                            "title": "DCJ Applications",
+                            "value": "DCJ Applications"
+                        },
+                        {
+                            "title": "DCM Applications",
+                            "value": "DCM Applications"
+                        },
+                        {
+                            "title": "DCS Applications",
+                            "value": "DCS Applications"
+                        },
+                        {
+                            "title": "Desktop Hardware",
+                            "value": "Desktop Hardware"
+                        },
+                        {
+                            "title": "Desktop Software",
+                            "value": "Desktop Software"
+                        },
+                        {
+                            "title": "DSSJ Applications",
+                            "value": "DSSJ Applications"
+                        },
+                        {
+                            "title": "Enterprise Applications",
+                            "value": "Enterprise Applications"
+                        },
+                        {
+                            "title": "External Applications",
+                            "value": "External Applications"
+                        },
+                        {
+                            "title": "Facilities",
+                            "value": "Facilities"
+                        },
+                        {
+                            "title": "HHS Applications",
+                            "value": "HHS Applications"
+                        },
+                        {
+                            "title": "Library Applications",
+                            "value": "Library Applications"
+                        },
+                        {
+                            "title": "MCSO Applications",
+                            "value": "MCSO Applications"
+                        },
+                        {
+                            "title": "Mobile Devices",
+                            "value": "Mobile Devices"
+                        },
+                        {
+                            "title": "Network",
+                            "value": "Network"
+                        },
+                        {
+                            "title": "NOND Applications",
+                            "value": "NOND Applications"
+                        },
+                        {
+                            "title": "Printing",
+                            "value": "Printing"
+                        },
+                        {
+                            "title": "Security",
+                            "value": "Security"
+                        },
+                        {
+                            "title": "Server",
+                            "value": "Server"
+                        },
+                        {
+                            "title": "Storage",
+                            "value": "Storage"
+                        },
+                        {
+                            "title": "Telecom",
+                            "value": "Telecom"
+                        },
+                        {
+                            "title": "VOIP",
+                            "value": "VOIP"
+                        }
+                    ],
+                    "placeholder": "Select One",
+                    "id": "category",
+                    "value": ""
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "Comments:",
+                    "wrap": true,
+                    "size": "Medium",
+                    "weight": "Bolder"
+                },
+                {
+                    "type": "Input.Text",
+                    "placeholder": "Any additional comments or information...",
+                    "isMultiline": true,
+                    "id": "comments"
+                }
+            ],
+            "height": "stretch",
+            "style": "emphasis",
+            "bleed": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "title": "Submit",
+                    "style": "positive"
+                }
+            ]
+        }
+    ]
+}
+```
+# CreateTask()
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Work Task",
+            "wrap": true,
+            "fontType": "Monospace",
+            "size": "ExtraLarge",
+            "weight": "Bolder"
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Task:",
+                                    "wrap": true,
+                                    "size": "Medium",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "*required",
+                                    "wrap": true,
+                                    "color": "Attention"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Input.Text",
+                    "placeholder": "Provide a short description of the work task...",
+                    "id": "description"
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Task Category:",
+                                    "wrap": true,
+                                    "size": "Medium",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "*required",
+                                    "wrap": true,
+                                    "color": "Attention"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Input.ChoiceSet",
+                    "choices": [
+                        {
+                            "title": "Applications",
+                            "value": "Applications"
+                        },
+                        {
+                            "title": "Database",
+                            "value": "Database"
+                        },
+                        {
+                            "title": "Corrective Action",
+                            "value": "Corrective Action"
+                        },
+                        {
+                            "title": "Facilities",
+                            "value": "Facilities"
+                        },
+                        {
+                            "title": "Hardware",
+                            "value": "Hardware"
+                        },
+                        {
+                            "title": "Mobile Device",
+                            "value": "Mobile Device"
+                        },
+                        {
+                            "title": "Network",
+                            "value": "Network"
+                        },
+                        {
+                            "title": "Printing",
+                            "value": "Printing"
+                        },
+                        {
+                            "title": "Purchase Request",
+                            "value": "purchase_request"
+                        },
+                        {
+                            "title": "Security",
+                            "value": "Security"
+                        },
+                        {
+                            "title": "Server",
+                            "value": "Server"
+                        },
+                        {
+                            "title": "Storage",
+                            "value": "Storage"
+                        },
+                        {
+                            "title": "Telecom",
+                            "value": "Telecom"
+                        },
+                        {
+                            "title": "Inquiry/Help",
+                            "value": "inquiry"
+                        }
+                    ],
+                    "placeholder": "Select One",
+                    "id": "category",
+                    "value": ""
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "Comments:",
+                    "wrap": true,
+                    "size": "Medium",
+                    "weight": "Bolder"
+                },
+                {
+                    "type": "Input.Text",
+                    "placeholder": "Any additional comments or information...",
+                    "isMultiline": true,
+                    "id": "comments"
+                }
+            ],
+            "height": "stretch",
+            "style": "emphasis",
+            "bleed": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "title": "Submit",
+                    "style": "positive"
+                }
+            ]
+        }
+    ]
+}
+```
+# SearchIncidents()
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Search Incidents",
+            "wrap": true,
+            "fontType": "Monospace",
+            "size": "ExtraLarge",
+            "weight": "Bolder"
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Date Created:",
+                                    "wrap": true,
+                                    "size": "Medium",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Input.Date",
+                    "id": "date"
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Incident State:",
+                                    "wrap": true,
+                                    "size": "Medium",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Input.ChoiceSet",
+                    "choices": [
+                        {
+                            "title": "Active",
+                            "value": "2"
+                        },
+                        {
+                            "title": "Closed",
+                            "value": "7"
+                        },
+                        {
+                            "title": "New",
+                            "value": "1"
+                        },
+                        {
+                            "title": "Pending",
+                            "value": "-5"
+                        },
+                        {
+                            "title": "Resolved",
+                            "value": "6"
+                        }
+                    ],
+                    "placeholder": "Select One",
+                    "id": "state",
+                    "value": ""
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Category:",
+                                    "wrap": true,
+                                    "size": "Medium",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Input.ChoiceSet",
+                    "choices": [
+                        {
+                            "title": "DCA Applications",
+                            "value": "DCA Applications"
+                        },
+                        {
+                            "title": "DCJ Applications",
+                            "value": "DCJ Applications"
+                        },
+                        {
+                            "title": "DCM Applications",
+                            "value": "DCM Applications"
+                        },
+                        {
+                            "title": "DCS Applications",
+                            "value": "DCS Applications"
+                        },
+                        {
+                            "title": "Desktop Hardware",
+                            "value": "Desktop Hardware"
+                        },
+                        {
+                            "title": "Desktop Software",
+                            "value": "Desktop Software"
+                        },
+                        {
+                            "title": "DSSJ Applications",
+                            "value": "DSSJ Applications"
+                        },
+                        {
+                            "title": "Enterprise Applications",
+                            "value": "Enterprise Applications"
+                        },
+                        {
+                            "title": "External Applications",
+                            "value": "External Applications"
+                        },
+                        {
+                            "title": "Facilities",
+                            "value": "HHS Applications"
+                        },
+                        {
+                            "title": "Library Applications",
+                            "value": "Library Applications"
+                        },
+                        {
+                            "title": "MCSO Applications",
+                            "value": "MCSO Applications"
+                        },
+                        {
+                            "title": "Mobile Devices",
+                            "value": "Mobile Devices"
+                        },
+                        {
+                            "title": "Network",
+                            "value": "Network"
+                        },
+                        {
+                            "title": "NOND Applications",
+                            "value": "NOND Applications"
+                        },
+                        {
+                            "title": "Printing",
+                            "value": "Printing"
+                        },
+                        {
+                            "title": "Security",
+                            "value": "Security"
+                        },
+                        {
+                            "title": "Server",
+                            "value": "Server"
+                        },
+                        {
+                            "title": "Storage",
+                            "value": "Storage"
+                        },
+                        {
+                            "title": "Telecom",
+                            "value": "Telecom"
+                        },
+                        {
+                            "title": "VOIP",
+                            "value": "VOIP"
+                        }
+                    ],
+                    "placeholder": "Select One",
+                    "id": "category",
+                    "value": ""
+                }
+            ],
+            "height": "stretch",
+            "style": "emphasis",
+            "bleed": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "title": "Submit",
+                    "style": "positive"
+                }
+            ]
+        }
+    ]
+}
+```
+# SearchTickets()
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Search Tickets",
+            "wrap": true,
+            "fontType": "Monospace",
+            "size": "ExtraLarge",
+            "weight": "Bolder"
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Date Created:",
+                                    "wrap": true,
+                                    "size": "Medium",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Input.Date",
+                    "id": "date"
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Ticket State:",
+                                    "wrap": true,
+                                    "size": "Medium",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Input.ChoiceSet",
+                    "choices": [
+                        {
+                            "title": "Closed Complete",
+                            "value": "3"
+                        },
+                        {
+                            "title": "Closed Incomplete",
+                            "value": "4"
+                        },
+                        {
+                            "title": "Closed Skipped",
+                            "value": "7"
+                        },
+                        {
+                            "title": "Open",
+                            "value": "1"
+                        },
+                        {
+                            "title": "Pending",
+                            "value": "-5"
+                        },
+                        {
+                            "title": "Work in Progress",
+                            "value": "2"
+                        }
+                    ],
+                    "placeholder": "Select One",
+                    "id": "state",
+                    "value": ""
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Category:",
+                                    "wrap": true,
+                                    "size": "Medium",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Input.ChoiceSet",
+                    "choices": [
+                        {
+                            "title": "Applications",
+                            "value": "Applications"
+                        },
+                        {
+                            "title": "Database",
+                            "value": "Database"
+                        },
+                        {
+                            "title": "Corrective Action",
+                            "value": "Corrective Action"
+                        },
+                        {
+                            "title": "Facilities",
+                            "value": "Facilities"
+                        },
+                        {
+                            "title": "Hardware",
+                            "value": "Hardware"
+                        },
+                        {
+                            "title": "Mobile Device",
+                            "value": "Mobile Device"
+                        },
+                        {
+                            "title": "Network",
+                            "value": "Network"
+                        },
+                        {
+                            "title": "Printing",
+                            "value": "Printing"
+                        },
+                        {
+                            "title": "Purchase Request",
+                            "value": "purchase_request"
+                        },
+                        {
+                            "title": "Security",
+                            "value": "Security"
+                        },
+                        {
+                            "title": "Server",
+                            "value": "Server"
+                        },
+                        {
+                            "title": "Storage",
+                            "value": "Storage"
+                        },
+                        {
+                            "title": "Telecom",
+                            "value": "Telecom"
+                        },
+                        {
+                            "title": "Inquiry/Help",
+                            "value": "inquiry"
+                        }
+                    ],
+                    "placeholder": "Select One",
+                    "id": "category",
+                    "value": ""
+                }
+            ],
+            "height": "stretch",
+            "style": "emphasis",
+            "bleed": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "title": "Submit",
+                    "style": "positive"
+                }
+            ]
+        }
+    ]
+}
+```
+# FormTemplate()
+[Activity
+    Attachments = ${json(CreateIncident())}
+]

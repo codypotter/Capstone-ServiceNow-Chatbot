@@ -1,0 +1,13 @@
+[import](common.lg)
+
+# ConfirmInput_Prompt_vSxmAq()
+- Something went wrong while checking existing tickets, would you like to try again?
+# SendActivity_0shKGP()
+[Activity
+    Type = typing
+]
+# SendActivity_uPvYvV()
+[Activity
+    type = delay
+    value = 3000
+]

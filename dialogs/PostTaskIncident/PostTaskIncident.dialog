@@ -1,0 +1,190 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "40lAQw",
+    "name": "PostTaskIncident",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "qHSOnn"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Yl26eZ"
+          },
+          "condition": "user.CreateIncidentTemp.category == null || user.CreateIncidentTemp.description == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "tuZZbf"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "MGlqZj"
+          },
+          "condition": "dialog.ticketType == \"incident\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "TJ5xi6"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.postURL",
+                  "value": "https://multuat.service-now.com/api/now/table/incident?sysparm_display_value=true&sysparm_fields=number%2Ccaller_id%2Ccategory%2Cshort_description%2Cassignment_group%2Ccomments"
+                },
+                {
+                  "property": "dialog.postBody",
+                  "value": "{\"short_description\": \"${user.CreateIncidentTemp.description}\",   \"caller_id\": \"ab37c565db851c907c1b78fdaa961951\",   \"category\": \"${user.CreateIncidentTemp.category}\",   \"assignment_group\": \"dffcb03c7c69600028a2b45fd3ff6758\",   \"comments\": \"${user.CreateIncidentTemp.comments}\"}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "l4vqOL"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.postURL",
+                  "value": "https://multuat.service-now.com/api/now/table/ticket?sysparm_display_value=true&sysparm_fields=number%2Cu_requested_for%2Cu_customer%2Cshort_description%2Ccomments%2Cassignment_group"
+                },
+                {
+                  "property": "dialog.postBody",
+                  "value": "{\"u_requested_for\":\"ab37c565db851c907c1b78fdaa961951\",\"short_description\":\"${user.CreateIncidentTemp.description}\",\"u_category\":\"${user.CreateIncidentTemp.category}\",\"comments\":\"${user.CreateIncidentTemp.comments}\",\"assignment_group\":\"dffcb03c7c69600028a2b45fd3ff6758\"}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "4saFMB"
+          },
+          "activity": "${SendActivity_4saFMB()}"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "cP4sn6"
+          },
+          "activity": "${SendActivity_cP4sn6()}"
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "DQWCpJ"
+          },
+          "method": "POST",
+          "url": "${dialog.postURL}",
+          "body": "${dialog.postBody}",
+          "headers": {
+            "Authorization": "Basic ${conversation.serviceNowHash}"
+          },
+          "resultProperty": "dialog.post_response"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "mN5pTs"
+          },
+          "condition": "dialog.post_response.statusCode",
+          "cases": [
+            {
+              "value": "201",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "r0KssB"
+                  },
+                  "activity": "${SendActivity_r0KssB()}"
+                },
+                {
+                  "$kind": "Microsoft.DeleteProperties",
+                  "$designer": {
+                    "id": "c1A59O"
+                  },
+                  "properties": [
+                    "user.CreateIncidentTemp.category",
+                    "user.CreateIncidentTemp.description",
+                    "user.CreateIncidentTemp.comments"
+                  ]
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.ConfirmInput",
+              "$designer": {
+                "id": "dONsf9"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": true,
+              "allowInterruptions": false,
+              "prompt": "${ConfirmInput_Prompt_dONsf9()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
+              },
+              "value": "=@confirmation",
+              "property": "dialog.retryPost"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "P2nAUZ"
+              },
+              "condition": "dialog.retryPost == true || dialog.retryPost == \"yes\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "Q5bX1F"
+                  },
+                  "activityProcessed": true,
+                  "options": "={ticketType:dialog.ticketType}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "EAnAPH"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "PostTaskIncident.lg",
+  "recognizer": "PostTaskIncident.lu.qna",
+  "id": "PostTaskIncident"
+}

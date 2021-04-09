@@ -1,0 +1,58 @@
+
+> LUIS application information
+> !# @app.versionId = 0.1
+> !# @app.culture = en-us
+> !# @app.luis_schema_version = 3.2.0
+
+
+> # Intent definitions
+
+# ChoiceInput_Response_0mH2qI
+- Incident
+- Ticket
+
+
+# ChoiceInput_Response_hEDuLY
+- Yes
+- No
+
+
+# ChoiceInput_Response_XudLJp
+
+
+> # Entity definitions
+
+
+> # PREBUILT Entity definitions
+
+
+> # Phrase list definitions
+
+
+> # List entities
+
+> # RegEx entities
+
+
+
+
+> Source: cross training. Please do not edit these directly!
+# _Interruption
+- Hi
+- Hello
+- Hi there
+- Howdy
+- Good day
+- profile
+- my profile
+- user information
+- my information
+- create profile
+- build profile
+- get tickets
+- tickets
+- create incident
+- new incident
+- create work task
+- new work task
+- work task

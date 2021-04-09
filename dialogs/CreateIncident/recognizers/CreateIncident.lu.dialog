@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "LUIS_CreateIncident",
+  "recognizers": {
+    "en-us": "CreateIncident.en-us.lu",
+    "": "CreateIncident.en-us.lu"
+  }
+}

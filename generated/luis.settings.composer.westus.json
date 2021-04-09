@@ -1,0 +1,32 @@
+{
+    "luis": {
+        "AddComment_en_us_lu": {
+            "appId": "1b32f773-5f04-4253-9fe8-2bc5b7425f2b",
+            "version": "1.1"
+        },
+        "GetAllTickets_en_us_lu": {
+            "appId": "89d50570-af61-49c5-b7b1-66268b4e81fc",
+            "version": "1.2"
+        },
+        "mc_servicenowbot_en_us_lu": {
+            "appId": "36634f7a-1856-4922-a558-56fe0489deb8",
+            "version": "1.7"
+        },
+        "CreateIncident_en_us_lu": {
+            "appId": "843db72f-7efd-4fef-8f80-4e77418bb79a",
+            "version": "11.1"
+        },
+        "UserProfile_en_us_lu": {
+            "appId": "730126cb-6e0e-4e9f-94e9-cd520384c817",
+            "version": "1.2"
+        },
+        "Search_en_us_lu": {
+            "appId": "8e19fce4-8145-4650-b424-aa6c8e1775de",
+            "version": "1.1"
+        },
+        "PostTaskIncident_en_us_lu": {
+            "appId": "49c0d13f-1124-4496-9324-66f5ce0e0b2e",
+            "version": "1.2"
+        }
+    }
+}

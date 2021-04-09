@@ -1,0 +1,19 @@
+exit
+az account set --s mcapps-devtest
+
+az ad group create --display-name MCSO-CAPSTONE-AZ --mail-nickname mcso_capstone_az --description "MCSO Capstone AZ Developers" --force false
+$userid = (az ad user show --id "psu_huynhv@partner.multco.us" --query "objectId")
+az ad group member add --group MCSO-CAPSTONE-AZ --member-id $userId
+
+$userid = (az ad user show --id "psu_bodina@partner.multco.us" --query "objectId")
+az ad group member add --group MCSO-CAPSTONE-AZ --member-id $userid
+$userid = (az ad user show --id "psu_ricksj@partner.multco.us" --query "objectId")
+az ad group member add --group MCSO-CAPSTONE-AZ --member-id $userid	
+$userid = (az ad user show --id "psu_lewisj@partner.multco.us" --query "objectId")
+az ad group member add --group MCSO-CAPSTONE-AZ --member-id $userid	
+$userid = (az ad user show --id "psu_potterc@partner.multco.us" --query "objectId")
+az ad group member add --group MCSO-CAPSTONE-AZ --member-id $userid	
+$userid = (az ad user show --id "psu_meyers@partner.multco.us" --query "objectId")
+az ad group member add --group MCSO-CAPSTONE-AZ --member-id $userid
+$userid = (az ad user show --id "psu_rayburng@partner.multco.us" --query "objectId")
+az ad group member add --group MCSO-CAPSTONE-AZ --member-id $userid

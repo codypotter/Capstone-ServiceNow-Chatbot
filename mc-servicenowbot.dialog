@@ -1,0 +1,391 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "mc-servicenowbot",
+      "description": "",
+      "id": "NFf49z"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720",
+        "name": "WelcomeUser"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item"
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else"
+              },
+              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "859266",
+                    "name": "Send a response"
+                  },
+                  "activity": "${SendActivity_Welcome()}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "RAIFmb"
+          },
+          "assignments": [
+            {
+              "property": "conversation.serviceNowHash",
+              "value": "bWRhc2gtYXBpOjRceE5odEQlV0Y="
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "NXZafv"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "olBHIX"
+          },
+          "activity": "${SendActivity_olBHIX()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "sCHEUv",
+        "name": "UserProfile"
+      },
+      "intent": "UserProfile",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "sykYJQ"
+          },
+          "activityProcessed": true,
+          "dialog": "UserProfile"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "27oszp",
+        "name": "Help"
+      },
+      "intent": "Help",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "O5hmtJ"
+          },
+          "activity": "${SendActivity_O5hmtJ()}"
+        }
+      ],
+      "condition": "#Help.Score > 0.6"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "GXH8cy",
+        "name": "Greeting"
+      },
+      "intent": "Greeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "ExVvbc"
+          },
+          "activityProcessed": true,
+          "dialog": "Greeting"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "l11xth",
+        "name": "Cancel"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "9ww267"
+          },
+          "activity": "${SendActivity_9ww267()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "30rl93"
+          },
+          "activityProcessed": true
+        }
+      ],
+      "condition": "#Cancel.Score > 0.6"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "4OvvF8",
+        "name": "Tickets"
+      },
+      "intent": "Tickets",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "rynuY5"
+          },
+          "activityProcessed": true,
+          "dialog": "GetAllTickets",
+          "resultProperty": "dialog.tickets"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "2yEuQk"
+          },
+          "index": "dialog.curTicketsLoop.index",
+          "value": "dialog.curTicketsLoop.value",
+          "itemsProperty": "dialog.tickets.result",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "SHq61T"
+              },
+              "condition": "length(dialog.curTicketsLoop.value.comments) > 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "KURnzq"
+                  },
+                  "property": "dialog.tempComment",
+                  "value": "=\"Comments: \\n\" + dialog.curTicketsLoop.value.comments"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "3F6fJa"
+              },
+              "activity": "${SendActivity_3F6fJa()}"
+            },
+            {
+              "$kind": "Microsoft.DeleteProperty",
+              "$designer": {
+                "id": "dcnLQc"
+              },
+              "property": "dialog.tempComment"
+            },
+            {
+              "$kind": "Microsoft.ConfirmInput",
+              "$designer": {
+                "id": "qE5g8N"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": true,
+              "allowInterruptions": false,
+              "prompt": "${ConfirmInput_Prompt_qE5g8N()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or "
+              },
+              "value": "=@confirmation",
+              "property": "dialog.viewAnotherTicket"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "e0Vs5h"
+              },
+              "condition": "dialog.viewAnotherTicket == false || dialog.viewAnotherTicket == \"no\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BreakLoop",
+                  "$designer": {
+                    "id": "BBl6Et"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "xMr2Py",
+        "name": "Incident"
+      },
+      "intent": "Incident",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "w3s3uj"
+          },
+          "condition": "user.CreateIncidentTemp.ticketType != \"incident\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.DeleteProperties",
+              "$designer": {
+                "id": "kYMHRA"
+              },
+              "properties": [
+                "user.CreateIncidentTemp.category",
+                "user.CreateIncidentTemp.description",
+                "user.CreateIncidentTemp.comments",
+                "user.CreateIncidentTemp.toUpdateSysID"
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "yB4gdE"
+          },
+          "property": "user.CreateIncidentTemp.ticketType",
+          "value": "incident"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "I1uH6V"
+          },
+          "activityProcessed": true,
+          "dialog": "CreateIncident",
+          "options": {
+            "ticketType": "incident"
+          }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "9IedYc"
+          }
+        }
+      ],
+      "priority": 0
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "y99pCq",
+        "name": "WorkTask"
+      },
+      "intent": "WorkTask",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "4FPv1a"
+          },
+          "condition": "user.CreateIncidentTemp.ticketType == \"incident\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.DeleteProperties",
+              "$designer": {
+                "id": "No9OnS"
+              },
+              "properties": [
+                "user.CreateIncidentTemp.category",
+                "user.CreateIncidentTemp.description",
+                "user.CreateIncidentTemp.comments",
+                "user.CreateIncidentTemp.toUpdateSysID"
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "6lyw60"
+          },
+          "property": "user.CreateIncidentTemp.ticketType",
+          "value": "work task"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "CYN62i"
+          },
+          "activityProcessed": true,
+          "dialog": "CreateIncident",
+          "options": {
+            "ticketType": "work task"
+          }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "C1RuRP"
+          }
+        }
+      ],
+      "priority": 0
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "V53RuA",
+        "name": "Search"
+      },
+      "intent": "Search",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "DeqwhY"
+          },
+          "activityProcessed": true,
+          "dialog": "Search"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "mc-servicenowbot.lg",
+  "id": "mc-servicenowbot",
+  "recognizer": "mc-servicenowbot.lu.qna"
+}

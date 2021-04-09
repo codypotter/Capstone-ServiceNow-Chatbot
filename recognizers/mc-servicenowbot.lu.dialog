@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "LUIS_mc-servicenowbot",
+  "recognizers": {
+    "en-us": "mc-servicenowbot.en-us.lu",
+    "": "mc-servicenowbot.en-us.lu"
+  }
+}

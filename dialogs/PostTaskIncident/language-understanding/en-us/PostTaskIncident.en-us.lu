@@ -1,0 +1,17 @@
+
+# ConfirmInput_Response_dONsf9
+- yes
+- no
+
+@ list confirmation = 
+	- yes :
+		-   yeah
+		-   ok
+		-   yup
+	- no :
+		-   nope
+		-   not now
+		-   not really
+		-   go back
+
+

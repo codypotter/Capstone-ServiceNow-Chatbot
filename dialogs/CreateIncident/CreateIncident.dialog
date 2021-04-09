@@ -1,0 +1,616 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "4UkUE1",
+    "name": "CreateIncident",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "sYLFlk"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "zNPi7R"
+          },
+          "condition": "user.CreateIncidentTemp.retryGetIncidents == null || user.CreateIncidentTemp.retryGetIncidents != true",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "KMf9al"
+              },
+              "condition": "user.CreateIncidentTemp.category != null && user.CreateIncidentTemp.description != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.ConfirmInput",
+                  "$designer": {
+                    "id": "rZuUNw"
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": true,
+                  "allowInterruptions": false,
+                  "prompt": "${ConfirmInput_Prompt_rZuUNw()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "property": "dialog.reuseIncident",
+                  "value": "=@confirmation"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "DsqifI"
+                  },
+                  "condition": "dialog.reuseIncident == true || dialog.reuseIncident == \"yes\"",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "JSuymQ"
+                      },
+                      "property": "dialog.showIncidentForm",
+                      "value": "= false"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "4gnoPF"
+                      },
+                      "property": "dialog.showIncidentForm",
+                      "value": "= true"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "YPDBLc"
+                  },
+                  "property": "dialog.reuseIncident",
+                  "value": "null"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "kz5gGU"
+                  },
+                  "property": "dialog.showIncidentForm",
+                  "value": "= true"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "D4HUda"
+              },
+              "condition": "dialog.showIncidentForm == true",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TextInput",
+                  "$designer": {
+                    "id": "WrErZD"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": true,
+                  "allowInterruptions": false,
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "${TextInput_InvalidPrompt_WrErZD()}",
+                  "defaultValueResponse": "",
+                  "property": "dialog.category",
+                  "outputFormat": "= \"temp\"",
+                  "validations": [
+                    "length(turn.activity.value.description) > 1",
+                    "length(turn.activity.value.category) > 1"
+                  ],
+                  "prompt": "${TextInput_Prompt_WrErZD()}"
+                },
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "VyvNHj"
+                  },
+                  "assignments": [
+                    {
+                      "property": "user.CreateIncidentTemp.category",
+                      "value": "= turn.activity.value.category"
+                    },
+                    {
+                      "property": "user.CreateIncidentTemp.description",
+                      "value": "= turn.activity.value.description"
+                    },
+                    {
+                      "property": "user.CreateIncidentTemp.comments",
+                      "value": "= turn.activity.value.comments"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "jqCgoj"
+              },
+              "assignments": [
+                {
+                  "property": "user.CreateIncidentTemp.retryGetIncidents",
+                  "value": "null"
+                },
+                {
+                  "property": "dialog.retryConfirmed",
+                  "value": "null"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "V67L5J"
+          },
+          "condition": "user.CreateIncidentTemp.category == null || user.CreateIncidentTemp.description == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "oiaeUT"
+              },
+              "activity": "${SendActivity_oiaeUT()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "4pr1RK"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "oJ9oeq"
+          },
+          "condition": "dialog.ticketType == \"incident\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "FI6621"
+              },
+              "value": "https://multuat.service-now.com/api/now/table/incident?sysparm_query=sys_created_by%3Dmdash-api%5Ecategory%3D${user.CreateIncidentTemp.category}&sysparm_display_value=true&sysparm_fields=number%2Cu_customer%2Cu_category%2Cshort_description%2Ccomments%2Cassignment_group%2Cstate",
+              "property": "dialog.getExistingURL"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "YEhpNd"
+              },
+              "property": "dialog.getExistingURL",
+              "value": "https://multuat.service-now.com/api/now/table/ticket?sysparm_query=u_category%3D${user.CreateIncidentTemp.category}%5Esys_created_by%3Dmdash-api&sysparm_display_value=true&sysparm_fields=number%2Cu_requested_for%2Cu_category%2Cshort_description%2Ccomments%2Cassignment_group%2Cstate%2Csys_id"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "bpLKle"
+          },
+          "activity": "${SendActivity_bpLKle()}"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "PwxXWS"
+          },
+          "activity": "${SendActivity_PwxXWS()}"
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "JMmh7b"
+          },
+          "method": "GET",
+          "resultProperty": "dialog.getIncidents_response",
+          "headers": {
+            "Authorization": "Basic ${conversation.serviceNowHash}"
+          },
+          "url": "${dialog.getExistingURL}"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "0Rt59J"
+          },
+          "condition": "dialog.getIncidents_response.statusCode",
+          "cases": [
+            {
+              "value": "200",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "MuWFZ3"
+                  },
+                  "property": "dialog.similarIncidentCount",
+                  "value": 0
+                },
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "lErNJS"
+                  },
+                  "index": "dialog.curIncidentLoop.index",
+                  "value": "dialog.curIncidentLoop.value",
+                  "itemsProperty": "dialog.getIncidents_response.content.result",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "yB9dBg"
+                      },
+                      "condition": "dialog.curIncidentLoop.value.state == \"Active\" || dialog.curIncidentLoop.value.state == \"New\" || dialog.curIncidentLoop.value.state == \"Pending\" || dialog.curIncidentLoop.value.state == \"Open\" || dialog.curIncidentLoop.value.state == \"Pending\" || dialog.curIncidentLoop.value.state == \"Work in Progress\"",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "dPtch7"
+                          },
+                          "property": "dialog.similarIncidentCount",
+                          "value": "= add(dialog.similarIncidentCount, 1)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "muet8r"
+                  },
+                  "condition": "dialog.similarIncidentCount > 0",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.ConfirmInput",
+                      "$designer": {
+                        "id": "HKe6x8"
+                      },
+                      "defaultLocale": "en-us",
+                      "disabled": false,
+                      "maxTurnCount": 3,
+                      "alwaysPrompt": true,
+                      "allowInterruptions": false,
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "",
+                      "defaultValueResponse": "",
+                      "prompt": "${ConfirmInput_Prompt_HKe6x8()}",
+                      "choiceOptions": {
+                        "includeNumbers": true,
+                        "inlineOrMore": ", or ",
+                        "inlineOr": " or ",
+                        "inlineSeparator": ", "
+                      },
+                      "value": "=@confirmation",
+                      "property": "dialog.inspectExisting"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "47fXpZ"
+                      },
+                      "condition": "dialog.inspectExisting == true || dialog.inspectExisting == \"yes\"",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.Foreach",
+                          "$designer": {
+                            "id": "FE3Fqr"
+                          },
+                          "index": "dialog.curIncidentLoop.index",
+                          "value": "dialog.curIncidentLoop.value",
+                          "itemsProperty": "dialog.getIncidents_response.content.result",
+                          "actions": [
+                            {
+                              "$kind": "Microsoft.SetProperty",
+                              "$designer": {
+                                "id": "gqpRva"
+                              },
+                              "property": "dialog.tempComments",
+                              "value": "=\"\""
+                            },
+                            {
+                              "$kind": "Microsoft.IfCondition",
+                              "$designer": {
+                                "id": "8uEjNU"
+                              },
+                              "condition": "length(dialog.curIncidentLoop.value.comments) > 1",
+                              "actions": [
+                                {
+                                  "$kind": "Microsoft.SetProperty",
+                                  "$designer": {
+                                    "id": "32phga"
+                                  },
+                                  "property": "dialog.tempComments",
+                                  "value": "=\"Comments: \\n\" + dialog.curIncidentLoop.value.comments"
+                                }
+                              ],
+                              "elseActions": []
+                            },
+                            {
+                              "$kind": "Microsoft.ConfirmInput",
+                              "$designer": {
+                                "id": "0UMmhp"
+                              },
+                              "defaultLocale": "en-us",
+                              "disabled": false,
+                              "maxTurnCount": 3,
+                              "alwaysPrompt": true,
+                              "allowInterruptions": false,
+                              "prompt": "${ConfirmInput_Prompt_0UMmhp()}",
+                              "unrecognizedPrompt": "",
+                              "invalidPrompt": "",
+                              "defaultValueResponse": "",
+                              "choiceOptions": {
+                                "includeNumbers": true,
+                                "inlineOrMore": ", or ",
+                                "inlineOr": " or ",
+                                "inlineSeparator": ", "
+                              },
+                              "value": "=@confirmation",
+                              "property": "dialog.userFoundSimilarIncident"
+                            },
+                            {
+                              "$kind": "Microsoft.IfCondition",
+                              "$designer": {
+                                "id": "AEEEMT"
+                              },
+                              "condition": "dialog.userFoundSimilarIncident == true || dialog.userFoundSimilarIncident == \"yes\"",
+                              "actions": [
+                                {
+                                  "$kind": "Microsoft.SetProperty",
+                                  "$designer": {
+                                    "id": "ajQo1N"
+                                  },
+                                  "property": "user.createIncidentTemp.toUpdateSysID",
+                                  "value": "= dialog.curIncidentLoop.value.sys_id"
+                                },
+                                {
+                                  "$kind": "Microsoft.BreakLoop",
+                                  "$designer": {
+                                    "id": "UbdQ99"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.ConfirmInput",
+              "$designer": {
+                "id": "I72RS1"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": true,
+              "allowInterruptions": false,
+              "prompt": "${ConfirmInput_Prompt_I72RS1()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
+              },
+              "property": "dialog.retryConfirmed",
+              "value": "=@confirmation"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "n2itQj"
+              },
+              "condition": "dialog.retryConfirmed == true || dialog.retryConfirmed == \"yes\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "qHejmf"
+                  },
+                  "property": "user.CreateIncidentTemp.retryGetIncidents",
+                  "value": "= true"
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "KEB45o"
+                  },
+                  "activityProcessed": true,
+                  "options": "={ticketType:dialog.ticketType}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "jEJUFr"
+          },
+          "condition": "dialog.userFoundSimilarIncident == true || dialog.userFoundSimilarIncident == \"yes\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.ConfirmInput",
+              "$designer": {
+                "id": "8hNOAB"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": true,
+              "allowInterruptions": false,
+              "prompt": "${ConfirmInput_Prompt_8hNOAB()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
+              },
+              "value": "=@confirmation",
+              "property": "dialog.userAddComment"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "cTvMtk"
+              },
+              "condition": "dialog.userAddComment == true || dialog.userAddComment == \"yes\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "wqvd2J"
+                  },
+                  "condition": "length(user.createIncidentTemp.comments) > 1",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.ConfirmInput",
+                      "$designer": {
+                        "id": "iKcTT7"
+                      },
+                      "defaultLocale": "en-us",
+                      "disabled": false,
+                      "maxTurnCount": 3,
+                      "alwaysPrompt": true,
+                      "allowInterruptions": false,
+                      "prompt": "${ConfirmInput_Prompt_iKcTT7()}",
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "",
+                      "defaultValueResponse": "",
+                      "choiceOptions": {
+                        "includeNumbers": true,
+                        "inlineOrMore": ", or ",
+                        "inlineOr": " or ",
+                        "inlineSeparator": ", "
+                      },
+                      "property": "dialog.useExistingComment",
+                      "value": "=@confirmation"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "sA04vv"
+                      },
+                      "property": "dialog.useExistingComment",
+                      "value": false
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "GOkSGI"
+                  },
+                  "condition": "dialog.useExistingComment == false || dialog.useExistingComment == \"no\"",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.TextInput",
+                      "$designer": {
+                        "id": "63ABiT"
+                      },
+                      "disabled": false,
+                      "maxTurnCount": 3,
+                      "alwaysPrompt": true,
+                      "allowInterruptions": false,
+                      "prompt": "${TextInput_Prompt_63ABiT()}",
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "${TextInput_InvalidPrompt_63ABiT()}",
+                      "defaultValueResponse": "",
+                      "property": "user.createIncidentTemp.comments",
+                      "outputFormat": "=trim(this.value)",
+                      "value": "=@comment",
+                      "validations": [
+                        "string(this.value) != null",
+                        "length(this.value) > 1"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "yBIvW2"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "AddComment",
+                  "options": "={ticketType:dialog.ticketType}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "spXg5U"
+              },
+              "activityProcessed": true,
+              "options": "={ticketType:dialog.ticketType}",
+              "dialog": "PostTaskIncident"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "MeyaKb"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "CreateIncident.lg",
+  "recognizer": "CreateIncident.lu.qna",
+  "id": "CreateIncident"
+}

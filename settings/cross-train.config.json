@@ -1,0 +1,44 @@
+{
+  "CreateIncident.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "AddComment.en-us",
+        "PostTaskIncident.en-us"
+      ]
+    }
+  },
+  "Search.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "GetAllTickets.en-us"
+      ]
+    }
+  },
+  "mc-servicenowbot.en-us": {
+    "rootDialog": true,
+    "triggers": {
+      "UserProfile": [
+        "UserProfile.en-us"
+      ],
+      "Help": [],
+      "Greeting": [
+        "Greeting.en-us"
+      ],
+      "Cancel": [],
+      "Tickets": [
+        "GetAllTickets.en-us"
+      ],
+      "Incident": [
+        "CreateIncident.en-us"
+      ],
+      "WorkTask": [
+        "CreateIncident.en-us"
+      ],
+      "Search": [
+        "Search.en-us"
+      ]
+    }
+  }
+}

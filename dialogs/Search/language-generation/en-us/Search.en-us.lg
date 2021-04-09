@@ -1,0 +1,96 @@
+[import](common.lg)
+
+# ChoiceInput_Prompt_0mH2qI()
+- Would you like to search for an Incident or a Ticket?
+# TextInput_Prompt_Ya7hM0()
+- ${SearchTicketForm()}
+# SearchIncidentForm()
+[Activity
+Attachments = ${json(SearchIncidents())}
+]
+# SearchTicketForm()
+[Activity
+Attachments = ${json(SearchTickets())}
+]
+# TextInput_Prompt_KrBGQM()
+- ${SearchIncidentForm()}
+# SendActivity_Vc0GzV()
+- Searching for ${dialog.ticket_type}s with a state of ${dialog.state}
+# SendActivity_IN1L1T()
+- Searching for ${dialog.ticket_type}s with a date of ${dialog.date}
+# ChoiceInput_Prompt_hEDuLY()
+- Would you like to search again?
+# ChoiceInput_Prompt_XudLJp()
+- No search parameters were entered. Would you like to see all existing Incidents/Tickets?
+# SendActivity_5gic00()
+- No matching search results were found
+# SendActivity_qi28Kg()
+-```
+    Number: ${dialog.curTicketsLoop.value.number}
+    Short Description: ${dialog.curTicketsLoop.value.short_description}
+    ${dialog.tempComment}State: ${dialog.curTicketsLoop.value.state}
+    Customer Name: ${dialog.curTicketsLoop.value.u_customer.display_value}
+```
+# SendActivity_1OmEDn()
+- No matching search results were found
+# SendActivity_6fFFn4()
+-```
+    Number: ${dialog.curTicketsLoop.value.number}
+    Short Description: ${dialog.curTicketsLoop.value.short_description}
+    ${dialog.tempComment}State: ${dialog.curTicketsLoop.value.state}
+    Customer Name: ${dialog.curTicketsLoop.value.u_customer.display_value}
+```
+# SendActivity_hmwh8p()
+- Searching for ${dialog.ticket_type}s with a category of ${dialog.category}
+# SendActivity_uUlb6S()
+- No matching search results were found
+# SendActivity_11fZxf()
+-```
+    Number: ${dialog.curTicketsLoop.value.number}
+    Short Description: ${dialog.curTicketsLoop.value.short_description}
+    ${dialog.tempComment}State: ${dialog.curTicketsLoop.value.state}
+    Customer Name: ${dialog.tempCustomerName}
+```
+# SendActivity_nkB7K0()
+-```
+    Number: ${dialog.curTicketsLoop.value.number}
+    Short Description: ${dialog.curTicketsLoop.value.short_description}
+    ${dialog.tempComment}State: ${dialog.curTicketsLoop.value.state}
+    Customer Name: ${dialog.curTicketsLoop.value.u_customer.display_value}
+```
+# SendActivity_w68z6K()
+[Activity
+    type = delay
+    value = 3000
+]
+# SendActivity_zMdrqN()
+[Activity
+    Type = typing
+]
+# SendActivity_BCHFWZ()
+[Activity
+    Type = typing
+]
+# SendActivity_xH04Bx()
+[Activity
+    type = delay
+    value = 3000
+]
+# SendActivity_OXkE8f()
+[Activity
+    type = delay
+    value = 3000
+]
+# SendActivity_3oqY9M()
+[Activity
+    type = delay
+    value = 3000
+]
+# SendActivity_XdLTCR()
+[Activity
+    Type = typing
+]
+# SendActivity_ugKgYg()
+[Activity
+    Type = typing
+]

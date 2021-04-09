@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "LUIS_PostTaskIncident",
+  "recognizers": {
+    "en-us": "PostTaskIncident.en-us.lu",
+    "": "PostTaskIncident.en-us.lu"
+  }
+}

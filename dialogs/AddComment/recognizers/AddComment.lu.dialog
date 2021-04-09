@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "LUIS_AddComment",
+  "recognizers": {
+    "en-us": "AddComment.en-us.lu",
+    "": "AddComment.en-us.lu"
+  }
+}
